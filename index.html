@@ -1,133 +1,1170 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>#000000</title>
-    <link type="image/x-icon" rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHklEQVQ4T2NkYGD4z0ABYBw1gGE0DBhGw4BhWIQBAE5OEAELnjVHAAAAAElFTkSuQmCC">
-    <style>
-        :root {
-            --color: #000000;
-            --color-transparent: #00000022;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MT's CES — AI-Native Ethernet Intelligence</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        ::selection {
-            background: var(--color-transparent);
-        }
+    :root {
+      --bg:       #03010a;
+      --surface:  #0e0b1a;
+      --surface2: #130f24;
+      --border:   rgba(139,92,246,0.2);
+      --border2:  rgba(139,92,246,0.08);
+      --violet:   #7c3aed;
+      --purple:   #a855f7;
+      --cyan:     #06b6d4;
+      --pink:     #ec4899;
+      --text:     #f1f0ff;
+      --muted:    #8b8aad;
+      --radius:   10px;
+    }
 
-        html,
-        body {
-            background: var(--color);
-            height: 100%;
-            margin: 0;
-        }
+    html { scroll-behavior: smooth; }
 
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-        #color {
-            background: white;
-            color: var(--color);
-            font-size: 2.5rem;
-            font-weight: 300;
-            padding: 2.25rem 3rem;
-            font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
-            cursor: text;
-        }
-    </style>
+    /* ANIMATED GRID BACKGROUND */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ORBS */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+      animation: orbFloat 12s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 600px; height: 600px; background: var(--violet); top: -200px; left: -150px; animation-duration: 14s; }
+    .orb-2 { width: 500px; height: 500px; background: var(--cyan); bottom: -150px; right: -100px; animation-duration: 18s; animation-delay: -5s; }
+    .orb-3 { width: 400px; height: 400px; background: var(--pink); top: 40%; left: 50%; animation-duration: 22s; animation-delay: -9s; opacity: 0.18; }
+
+    @keyframes orbFloat {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(40px, 30px) scale(1.08); }
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(3,1,10,0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border2);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-logo {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--violet), var(--cyan));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 900; color: #fff;
+      flex-shrink: 0;
+    }
+
+    .nav-ai-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--violet), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      border: 1px solid rgba(124,58,237,0.4);
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a { color: var(--muted); font-size: 0.88rem; text-decoration: none; transition: color 0.2s; }
+    nav ul a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--violet), var(--purple));
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.45rem 1.1rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 9rem 2rem 7rem;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.35);
+      border-radius: 999px;
+      padding: 5px 14px 5px 8px;
+      margin-bottom: 2rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--purple);
+    }
+
+    .hero-eyebrow-dot {
+      width: 7px; height: 7px;
+      background: var(--purple);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(168,85,247,0.4); }
+      50%       { opacity: 0.7; box-shadow: 0 0 0 6px rgba(168,85,247,0); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      max-width: 900px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .grad-text {
+      background: linear-gradient(135deg, #c084fc 0%, #818cf8 40%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-sub strong { color: var(--text); font-weight: 600; }
+
+    .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.75rem 1.75rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--violet), var(--purple));
+      color: #fff;
+      box-shadow: 0 0 30px rgba(124,58,237,0.35);
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 0 50px rgba(124,58,237,0.55); }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text);
+      backdrop-filter: blur(8px);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+
+    .hero-disclaimer {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    /* MARQUEE */
+    .marquee-wrap {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      border-top: 1px solid var(--border2);
+      border-bottom: 1px solid var(--border2);
+      background: linear-gradient(90deg, rgba(124,58,237,0.05), rgba(6,182,212,0.05));
+      padding: 0.75rem 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      animation: marquee 30s linear infinite;
+      white-space: nowrap;
+      width: max-content;
+    }
+
+    .marquee-item {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .marquee-item::before {
+      content: '✦';
+      background: linear-gradient(135deg, var(--violet), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 0.6rem;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* SOCIAL PROOF */
+    .backers {
+      position: relative;
+      z-index: 1;
+      padding: 3.5rem 2rem;
+      text-align: center;
+    }
+
+    .backers p {
+      font-size: 0.73rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.6;
+      margin-bottom: 1.75rem;
+    }
+
+    .backer-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+    }
+
+    .backer-logo {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--muted);
+      opacity: 0.45;
+      transition: opacity 0.2s;
+      filter: grayscale(1);
+    }
+    .backer-logo:hover { opacity: 0.9; filter: grayscale(0); }
+
+    /* STATS */
+    .stats-section {
+      position: relative;
+      z-index: 1;
+      padding: 1rem 2rem 4rem;
+    }
+
+    .stats-grid {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border2);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .stat-box {
+      background: var(--surface);
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-box span {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    /* SECTIONS */
+    .section-wrap {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.73rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 1rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: var(--purple);
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 3.5rem;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* INTELLIGENCE LAYER — SPLIT SECTION */
+    .intel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .intel-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intel-visual::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.4), rgba(6,182,212,0.2), transparent 60%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .intel-visual-inner { position: relative; z-index: 1; }
+
+    .model-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .model-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .model-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--purple);
+    }
+
+    .model-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: rgba(6,182,212,0.15);
+      color: var(--cyan);
+      border: 1px solid rgba(6,182,212,0.3);
+      padding: 2px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .model-bar-wrap { display: flex; flex-direction: column; gap: 6px; }
+
+    .model-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.73rem;
+      color: var(--muted);
+    }
+
+    .model-bar-row span:first-child { width: 90px; flex-shrink: 0; }
+
+    .model-bar {
+      flex: 1;
+      height: 5px;
+      background: rgba(139,92,246,0.12);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .model-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--violet), var(--cyan));
+      animation: barGrow 1.5s ease-out forwards;
+      transform-origin: left;
+    }
+
+    @keyframes barGrow {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    .intel-features { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .intel-feature {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .intel-feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--purple);
+    }
+
+    .intel-feature h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .intel-feature p  { font-size: 0.87rem; color: var(--muted); line-height: 1.55; }
+
+    /* CAPABILITIES GRID */
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border2);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .cap-card {
+      background: var(--surface);
+      padding: 2rem;
+      transition: background 0.2s;
+    }
+
+    .cap-card:hover { background: var(--surface2); }
+
+    .cap-card-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+    }
+
+    .cap-card h3 { font-size: 0.98rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .cap-card p  { font-size: 0.87rem; color: var(--muted); line-height: 1.55; }
+
+    /* AGENTIC WORKFLOW */
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border2);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      overflow: hidden;
+      counter-reset: step;
+    }
+
+    .workflow-step {
+      background: var(--surface);
+      padding: 2rem 1.5rem;
+      counter-increment: step;
+      position: relative;
+    }
+
+    .workflow-step::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-left: 8px solid var(--border2);
+      z-index: 2;
+    }
+
+    .workflow-step:last-child::after { display: none; }
+
+    .workflow-num {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--purple);
+      opacity: 0.7;
+      margin-bottom: 0.75rem;
+    }
+
+    .workflow-step h3 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .workflow-step p  { font-size: 0.84rem; color: var(--muted); line-height: 1.5; }
+
+    /* TESTIMONIALS */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .testimonial {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 14px;
+      padding: 1.75rem;
+      transition: border-color 0.2s;
+    }
+
+    .testimonial:hover { border-color: rgba(124,58,237,0.4); }
+
+    .testimonial-quote {
+      font-size: 0.92rem;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+      opacity: 0.9;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .testimonial-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.85rem; color: #fff;
+      flex-shrink: 0;
+    }
+
+    .testimonial-name { font-size: 0.85rem; font-weight: 700; }
+    .testimonial-title { font-size: 0.75rem; color: var(--muted); }
+
+    /* CTA SECTION */
+    .cta-section {
+      position: relative;
+      z-index: 1;
+      padding: 1rem 2rem 6rem;
+    }
+
+    .cta-box {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.5), rgba(6,182,212,0.3), transparent 60%);
+      z-index: -1;
+    }
+
+    .cta-box::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--purple), var(--cyan), transparent);
+    }
+
+    .cta-box h2 {
+      font-size: clamp(1.6rem, 3vw, 2.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .waitlist-form {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 460px;
+      margin: 0 auto 1rem;
+    }
+
+    .waitlist-form input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text);
+      padding: 0.7rem 1.25rem;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .waitlist-form input::placeholder { color: var(--muted); opacity: 0.6; }
+    .waitlist-form input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+    }
+
+    .cta-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      opacity: 0.6;
+    }
+
+    .cta-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border2);
+    }
+
+    .cta-stat strong { display: block; font-size: 1.3rem; font-weight: 900; color: var(--purple); }
+    .cta-stat span   { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 2rem;
+      border-top: 1px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .footer-right {
+      font-size: 0.75rem;
+      color: var(--muted);
+      opacity: 0.5;
+    }
+
+    /* TOAST */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: linear-gradient(135deg, var(--violet), var(--purple));
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      z-index: 999;
+      white-space: nowrap;
+    }
+
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 900px) {
+      .intel-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .workflow { grid-template-columns: 1fr 1fr; }
+      .workflow-step::after { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .workflow { grid-template-columns: 1fr; }
+      nav ul { display: none; }
+      .waitlist-form { flex-direction: column; border-radius: var(--radius); }
+      .waitlist-form input { border-radius: var(--radius); }
+      .cta-stats { flex-wrap: wrap; gap: 1.5rem; }
+      .cta-box { padding: 2.5rem 1.5rem; }
+    }
+  </style>
 </head>
-
 <body>
-    <p id="color">#000000</p>
-    <script>
-        function randomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1) + min);
-        }
 
-        function hslToHex(h, s, l) {
-            h /= 360;
-            s /= 100;
-            l /= 100;
-            var r = void 0,
-                g = void 0,
-                b = void 0;
-            if (s === 0) {
-                r = g = b = l; // achromatic
-            } else {
-                var hue2rgb = function hue2rgb(p, q, t) {
-                    if (t < 0) t += 1;
-                    if (t > 1) t -= 1;
-                    if (t < 1 / 6) return p + (q - p) * 6 * t;
-                    if (t < 1 / 2) return q;
-                    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-                    return p;
-                };
-                var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-                var p = 2 * l - q;
-                r = hue2rgb(p, q, h + 1 / 3);
-                g = hue2rgb(p, q, h);
-                b = hue2rgb(p, q, h - 1 / 3);
-            }
-            var toHex = function toHex(x) {
-                var hex = Math.round(x * 255).toString(16);
-                return hex.length === 1 ? '0' + hex : hex;
-            };
-            return '#' + toHex(r) + toHex(g) + toHex(b);
-        }
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
 
-        window.onload = function () {
-            let stopProp = function (ev) {
-                ev.stopPropagation();
-            }
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">MT</div>
+    MT's CES
+    <div class="nav-ai-badge">AI&#8209;Native</div>
+  </div>
+  <ul>
+    <li><a href="#capabilities">Capabilities</a></li>
+    <li><a href="#model">Model</a></li>
+    <li><a href="#workflow">Workflow</a></li>
+    <li><a href="#waitlist">Pricing</a></li>
+  </ul>
+  <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+</nav>
 
-            var colorElement = document.getElementById("color");
-            colorElement.addEventListener("click", stopProp, false);
-            colorElement.addEventListener("mousedown", stopProp, false);
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">
+    <div class="hero-eyebrow-dot"></div>
+    Introducing CableGPT&#8209;4 &mdash; Now in Public Beta
+  </div>
+  <h1>The World's First<br><span class="grad-text">AI-Native Ethernet<br>Intelligence Platform</span></h1>
+  <p class="hero-sub">
+    MT's CES reimagines physical network infrastructure with a <strong>proprietary foundation model</strong> trained on 4.2 billion cable topologies. Autonomous termination. Agentic routing. <strong>Zero signal loss.</strong>
+  </p>
+  <div class="btn-group">
+    <a href="#waitlist" class="btn btn-primary">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      Get Early Access
+    </a>
+    <a href="#model" class="btn btn-ghost">Read the Research</a>
+  </div>
+  <p class="hero-disclaimer">Cables still require copper. AI handles everything else.</p>
+</div>
 
-            var setFavicon = function (hex) {
-                var canvas = document.createElement('canvas');
-                canvas.width = 16;
-                canvas.height = 16;
-                var ctx = canvas.getContext('2d');
-                ctx.fillStyle = hex;
-                ctx.fillRect(0, 0, 16, 16);
-                document.getElementsByTagName('link')[0].href = canvas.toDataURL("image/x-icon");
-            }
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Agentic Cable Intelligence</span>
+    <span class="marquee-item">Neural Continuity Analysis</span>
+    <span class="marquee-item">Reinforcement Learning from Human Feedback (Copper Edition)</span>
+    <span class="marquee-item">Semantic VLAN Understanding</span>
+    <span class="marquee-item">Foundation Model for Network Topology</span>
+    <span class="marquee-item">Autonomous Termination Agents</span>
+    <span class="marquee-item">Vector-Embedded Cable Scheduling</span>
+    <span class="marquee-item">Multimodal Rack Intelligence</span>
+    <span class="marquee-item">CableGPT-4 Inference Pipeline</span>
+    <span class="marquee-item">Zero-Shot Length Prediction</span>
+    <!-- Duplicate for seamless loop -->
+    <span class="marquee-item">Agentic Cable Intelligence</span>
+    <span class="marquee-item">Neural Continuity Analysis</span>
+    <span class="marquee-item">Reinforcement Learning from Human Feedback (Copper Edition)</span>
+    <span class="marquee-item">Semantic VLAN Understanding</span>
+    <span class="marquee-item">Foundation Model for Network Topology</span>
+    <span class="marquee-item">Autonomous Termination Agents</span>
+    <span class="marquee-item">Vector-Embedded Cable Scheduling</span>
+    <span class="marquee-item">Multimodal Rack Intelligence</span>
+    <span class="marquee-item">CableGPT-4 Inference Pipeline</span>
+    <span class="marquee-item">Zero-Shot Length Prediction</span>
+  </div>
+</div>
 
-            var setRandomColor = function setRandomColor() {
-                var h = void 0,
-                    s = void 0,
-                    l = void 0;
+<!-- BACKERS -->
+<div class="backers">
+  <p>Backed by the most forward-thinking minds in AI infrastructure</p>
+  <div class="backer-logos">
+    <span class="backer-logo">Sequoia</span>
+    <span class="backer-logo">a16z</span>
+    <span class="backer-logo">Y Combinator</span>
+    <span class="backer-logo">Andreessen</span>
+    <span class="backer-logo">Benchmark</span>
+  </div>
+</div>
 
-                h = randomInt(0, 359);
-                s = randomInt(55, 75);
-                l = randomInt(40, 60);
+<!-- STATS -->
+<div class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-box">
+      <strong>4.2B</strong>
+      <span>Model Parameters</span>
+    </div>
+    <div class="stat-box">
+      <strong>99.97%</strong>
+      <span>Inference Accuracy</span>
+    </div>
+    <div class="stat-box">
+      <strong>&lt;0.3ms</strong>
+      <span>Routing Latency</span>
+    </div>
+    <div class="stat-box">
+      <strong>10⁶</strong>
+      <span>Topologies Modelled</span>
+    </div>
+  </div>
+</div>
 
-                document.documentElement.style.setProperty('--color', 'hsl(' + h + ', ' + s + '%, ' + l + '%)');
-                var hex = hslToHex(h, s, l);
-                document.title = hex;
-                colorElement.innerHTML = hex;
-                document.documentElement.style.setProperty('--color-transparent', hex + '22');
+<!-- INTELLIGENCE LAYER -->
+<div id="model" class="section-wrap">
+  <div class="intel-grid">
+    <div>
+      <div class="section-label">The Foundation Model</div>
+      <h2 class="section-title">CableGPT&#8209;4: trained on every network that has ever existed</h2>
+      <p class="section-sub">Our proprietary large language model doesn't just cut cables — it <em>understands</em> cables. Pre-trained on 4.2 billion synthetic and real-world topologies, fine-tuned with RLHF from master network engineers, and deployed via a low-latency inference API that lives between your order form and our crimping tool.</p>
+      <div class="intel-features">
+        <div class="intel-feature">
+          <div class="intel-feature-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div>
+            <h3>Zero-shot length prediction</h3>
+            <p>Describe your rack in plain English. CableGPT-4 infers the exact cable schedule from semantic floorplan embeddings.</p>
+          </div>
+        </div>
+        <div class="intel-feature">
+          <div class="intel-feature-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <div>
+            <h3>Real-time continuity inference</h3>
+            <p>Neural analysis of TDR waveforms detects faults 40× faster than legacy testers. Every cable ships with an AI-signed continuity certificate.</p>
+          </div>
+        </div>
+        <div class="intel-feature">
+          <div class="intel-feature-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3M6.343 6.343l-.707-.707M12 21v-1M8 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"/></svg>
+          </div>
+          <div>
+            <h3>Autonomous colour reasoning</h3>
+            <p>Semantic VLAN understanding allows CableGPT-4 to suggest optimal colour schedules before you've finished describing your network.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-                setFavicon(hex);
-            };
-            setRandomColor();
+    <div class="intel-visual">
+      <div class="intel-visual-inner">
+        <div class="model-card">
+          <div class="model-card-header">
+            <span class="model-name">CableGPT-4 · Evaluation</span>
+            <span class="model-badge">Live</span>
+          </div>
+          <div class="model-bar-wrap">
+            <div class="model-bar-row">
+              <span>Length IQ</span>
+              <div class="model-bar"><div class="model-bar-fill" style="width:97%"></div></div>
+              <span>97%</span>
+            </div>
+            <div class="model-bar-row">
+              <span>Termination</span>
+              <div class="model-bar"><div class="model-bar-fill" style="width:99%"></div></div>
+              <span>99%</span>
+            </div>
+            <div class="model-bar-row">
+              <span>Colour Reason.</span>
+              <div class="model-bar"><div class="model-bar-fill" style="width:94%"></div></div>
+              <span>94%</span>
+            </div>
+            <div class="model-bar-row">
+              <span>Fault Detect.</span>
+              <div class="model-bar"><div class="model-bar-fill" style="width:99%"></div></div>
+              <span>99.97%</span>
+            </div>
+          </div>
+        </div>
+        <div class="model-card" style="font-family: monospace; font-size: 0.8rem; color: var(--muted); line-height: 1.8;">
+          <span style="color: var(--purple);">&gt;</span> <span style="color: var(--cyan);">cableGPT.infer</span>({<br>
+          &nbsp;&nbsp;topology: <span style="color: #86efac;">"home-lab-2u"</span>,<br>
+          &nbsp;&nbsp;ports: <span style="color: #fb923c;">24</span>,<br>
+          &nbsp;&nbsp;category: <span style="color: #86efac;">"Cat6A"</span><br>
+          })<br><br>
+          <span style="color: var(--purple);">✦</span> <span style="color: #86efac;">Generating cable schedule...</span><br>
+          <span style="color: var(--purple);">✦</span> <span style="color: #86efac;">Optimising for signal integrity</span><br>
+          <span style="color: var(--cyan);">→ 24 cables · 8 lengths · 4 colours</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-            var body = document.getElementsByTagName("body")[0];
-            body.addEventListener("mousedown", function (ev) {
-                ev.preventDefault();
-            });
-            body.addEventListener("click", function () {
-                setRandomColor();
-            }, false);
-        };
-    </script>
+<!-- CAPABILITIES -->
+<div id="capabilities" class="section-wrap" style="padding-top:0">
+  <div class="section-label">AI Capabilities</div>
+  <h2 class="section-title">Every service is an AI agent</h2>
+  <p class="section-sub">We didn't bolt AI onto an existing cable business. We built an AI-native platform that happens to produce physical cables as an output artefact.</p>
+
+  <div class="cap-grid">
+    <div class="cap-card">
+      <div class="cap-card-tag">Agent: LengthOptimizer™</div>
+      <h3>Intelligent Custom Lengths</h3>
+      <p>Transformer-based length prediction from natural-language floorplan descriptions. Specify in metres or just describe the room — the model handles the rest.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-card-tag">Agent: ChromaVLAN™</div>
+      <h3>Semantic Colour Intelligence</h3>
+      <p>CableGPT-4 learns your network schema and generates an optimal colour schedule, cross-referenced against IEEE and ANSI/TIA standards via RAG pipeline.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-card-tag">Agent: PatchMind™</div>
+      <h3>Agentic Panel Termination</h3>
+      <p>Our autonomous termination agent ingests your floorplan as a vector embedding and outputs a labelled patch schedule with zero human intervention required.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-card-tag">Agent: CatBoost™ (the cable kind)</div>
+      <h3>AI-Matched Cable Category</h3>
+      <p>Gradient-boosted classification model evaluates your switch PoE budget, NAS throughput, and future 10 GbE aspirations to recommend Cat6A vs Cat8 with confidence scores.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-card-tag">Agent: NeuralFluke™</div>
+      <h3>Neural Continuity Certification</h3>
+      <p>AI-interpreted TDR waveform analysis signs every cable with a cryptographically-verified continuity certificate. No cable ships without a model-confirmed pass.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-card-tag">Agent: Topology Copilot™</div>
+      <h3>Generative Network Design</h3>
+      <p>Share your rack diagram via drag-and-drop. Our multimodal vision model reads it and generates a complete cable schedule, BOM, and rack elevation in seconds.</p>
+    </div>
+  </div>
+</div>
+
+<!-- WORKFLOW -->
+<div id="workflow" class="section-wrap" style="padding-top:0">
+  <div class="section-label">Agentic Workflow</div>
+  <h2 class="section-title">From natural language to doorstep</h2>
+  <p class="section-sub">Four autonomous agents orchestrate your order. You only need to describe what you want.</p>
+
+  <div class="workflow">
+    <div class="workflow-step">
+      <div class="workflow-num">Step 01 — Ingest</div>
+      <h3>Natural Language Intake</h3>
+      <p>Type what you need. CableGPT-4 extracts structured intent from your message via a fine-tuned extraction head.</p>
+    </div>
+    <div class="workflow-step">
+      <div class="workflow-num">Step 02 — Reason</div>
+      <h3>Topology Inference</h3>
+      <p>LengthOptimizer and ChromaVLAN agents run in parallel, each contributing to a unified cable schedule with uncertainty estimates.</p>
+    </div>
+    <div class="workflow-step">
+      <div class="workflow-num">Step 03 — Build</div>
+      <h3>Human-in-the-Loop Fabrication</h3>
+      <p>AI-generated spec is handed to a human craftsperson (MT). NeuralFluke validates every cable before it's packaged.</p>
+    </div>
+    <div class="workflow-step">
+      <div class="workflow-num">Step 04 — Deliver</div>
+      <h3>Certified Physical Output</h3>
+      <p>Cables arrive with an AI-signed certificate, QR-linked test report, and a prompt to fine-tune CableGPT-4 on your topology.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="section-wrap" style="padding-top:0">
+  <div class="section-label">Social Proof</div>
+  <h2 class="section-title">The smartest people in the room agree</h2>
+  <p class="section-sub">Prosumers who've experienced the intelligence layer.</p>
+
+  <div class="testimonials-grid">
+    <div class="testimonial">
+      <p class="testimonial-quote">"I didn't know I needed an AI to tell me my patch cable was 2.3 metres. Now I can't imagine ordering any other way. The CableGPT inference is just… correct."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar" style="background: linear-gradient(135deg, #7c3aed, #06b6d4);">JK</div>
+        <div>
+          <div class="testimonial-name">Jake K.</div>
+          <div class="testimonial-title">Home Lab Operator · 48-port rack</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p class="testimonial-quote">"The ChromaVLAN agent suggested a colour scheme I hadn't considered. My network is objectively more intelligent now. I attribute 30% of my 10 GbE speeds to the AI."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar" style="background: linear-gradient(135deg, #ec4899, #7c3aed);">SR</div>
+        <div>
+          <div class="testimonial-name">S. Richardson</div>
+          <div class="testimonial-title">Prosumer · NAS enthusiast · Cat8 convert</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p class="testimonial-quote">"The AI continuity certificate gave my cables a level of credibility that my previous supplier — a large box retailer — simply could not match. Game-changing."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar" style="background: linear-gradient(135deg, #f97316, #ec4899);">DM</div>
+        <div>
+          <div class="testimonial-name">D. Martinez</div>
+          <div class="testimonial-title">Studio Engineer · 3D S&E build</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WAITLIST CTA -->
+<div id="waitlist" class="cta-section">
+  <div class="cta-box">
+    <div class="section-label" style="justify-content:center; margin-bottom:1rem">Join the Waitlist</div>
+    <h2>Be first to experience<br><span class="grad-text">cable intelligence at scale</span></h2>
+    <p>CableGPT-4 is in public beta. Join 4,200+ prosumers and get priority access, early pricing, and a complimentary topology consultation.</p>
+
+    <form class="waitlist-form" onsubmit="handleWaitlist(event)">
+      <input type="email" id="waitlist-email" placeholder="Enter your email address" required />
+      <button type="submit" class="btn btn-primary" style="border:none;cursor:pointer;white-space:nowrap;">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Get Access
+      </button>
+    </form>
+
+    <p class="cta-note">No credit card. Cancel whenever. Cables still handmade.</p>
+
+    <div class="cta-stats">
+      <div class="cta-stat">
+        <strong>4,200+</strong>
+        <span>On Waitlist</span>
+      </div>
+      <div class="cta-stat">
+        <strong>$0</strong>
+        <span>To Join</span>
+      </div>
+      <div class="cta-stat">
+        <strong>48h</strong>
+        <span>Avg. First Response</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="nav-logo" style="width:26px;height:26px;font-size:0.75rem;">MT</div>
+    MT's Custom Ethernet Solutions
+  </div>
+  <div class="footer-right">&copy; 2026 MT's CES. Powered by CableGPT-4. All cables tested by AI (and MT).</div>
+</footer>
+
+<div id="toast">You're on the list. CableGPT-4 will be in touch. ✦</div>
+
+<script>
+  function handleWaitlist(e) {
+    e.preventDefault();
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    e.target.reset();
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Animate stat counters on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.model-bar-fill').forEach(el => observer.observe(el));
+</script>
+
 </body>
-
 </html>
